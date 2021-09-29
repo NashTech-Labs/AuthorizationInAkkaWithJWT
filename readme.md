@@ -69,6 +69,7 @@ scoverage plugin is used in the code for checking code coverage. Code coverage i
  ```
 
 More details about project libraraies (e.g. version etc..) can be found in files:
+
 **build.sbt**
 **Dependencies**
 **CommonSettings**
