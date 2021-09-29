@@ -101,8 +101,6 @@ object AdminHTTPServer extends App with AdminService with LazyLogging {
                |+----------+-----------+
                || password | root      |
                |+----------+-----------+
-               | password | root      |
-               |+----------+-----------+
                |
                |""".stripMargin)
           .reset())

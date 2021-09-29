@@ -23,7 +23,7 @@ MySQL details
 -------------
 user: root
 password: root
-schema: capstone
+schema: template
 port: 3306
 ````
 

@@ -56,7 +56,7 @@ trait AdminServiceHandler
                 loginRequest: UserLoginRequest): Future[HttpResponse] = {
     if (isValidEmail(loginRequest.email)) {
       ask(command,
-        CheckIfUserAccountEnabled(loginRequest.email, loginRequest.role))
+          CheckIfUserAccountEnabled(loginRequest.email, loginRequest.role))
         .flatMap {
           case ValidationResponse(true) =>
             ask(command,
@@ -124,21 +124,22 @@ trait AdminServiceHandler
       ))
   }
 
-  def loginAdminOrUser(
-      command: ActorRef,
-      loginRequest: UserLoginRequest): Future[HttpResponse] = {
+  def loginAdminOrUser(command: ActorRef,
+                       loginRequest: UserLoginRequest): Future[HttpResponse] = {
     logger.info(s"going to validate details for login $loginRequest")
     if (isValidEmail(loginRequest.email)) {
       ask(command,
           CheckAdminOrUserExists(loginRequest.email,
-                                             encrypt(loginRequest.password),
-                                             loginRequest.role))
+                                 encrypt(loginRequest.password),
+                                 loginRequest.role))
         .flatMap {
           case ValidationResponse(true) =>
-            logger.info(s"user is validated ${loginRequest.email}, ${encrypt(loginRequest.password)}")
+            logger.info(
+              s"user is validated ${loginRequest.email}, ${encrypt(loginRequest.password)}")
             loginSuccessResponse(command, loginRequest)
           case ValidationResponse(false) =>
-            logger.info(s"user invalid ${loginRequest.email}, ${encrypt(loginRequest.password)}")
+            logger.info(
+              s"user invalid ${loginRequest.email}, ${encrypt(loginRequest.password)}")
             Future.successful(
               HttpResponse(
                 StatusCodes.Forbidden,
@@ -202,32 +203,31 @@ trait AdminServiceHandler
                   Some(
                     admin.name
                       .take(TWO) + UUID.randomUUID().toString.take(EIGHT))
-                ask(
-                  command,
-                  CreateAdminOrUser(admin.copy(key = generatedKey))).map {
-                  case Updated(false) =>
-                    HttpResponse(
-                      StatusCodes.Conflict,
-                      entity =
-                        HttpEntity(ContentTypes.`application/json`,
-                                   write(
-                                     generateCommonResponse(status = false,
-                                                            Some(List()),
-                                                            Some(INVALID_INPUT),
-                                                            None)))
-                    )
-                  case response: AdminAccountCreated =>
-                    HttpResponse(
-                      StatusCodes.Created,
-                      entity = HttpEntity(
-                        ContentTypes.`application/json`,
-                        write(
-                          generateCommonResponseForCaseClass(status = true,
-                                                             Some(List()),
-                                                             Some(response),
-                                                             None)))
-                    )
-                }
+                ask(command, CreateAdminOrUser(admin.copy(key = generatedKey)))
+                  .map {
+                    case Updated(false) =>
+                      HttpResponse(
+                        StatusCodes.Conflict,
+                        entity = HttpEntity(
+                          ContentTypes.`application/json`,
+                          write(
+                            generateCommonResponse(status = false,
+                                                   Some(List()),
+                                                   Some(INVALID_INPUT),
+                                                   None)))
+                      )
+                    case response: AdminAccountCreated =>
+                      HttpResponse(
+                        StatusCodes.Created,
+                        entity = HttpEntity(
+                          ContentTypes.`application/json`,
+                          write(
+                            generateCommonResponseForCaseClass(status = true,
+                                                               Some(List()),
+                                                               Some(response),
+                                                               None)))
+                      )
+                  }
               } else {
 
                 logger.info(s"Invalid input name must have 2 alphabets")

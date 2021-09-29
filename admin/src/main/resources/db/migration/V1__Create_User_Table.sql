@@ -3,7 +3,7 @@
 -- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS template;
 
-CREATE TABLE IF NOT EXISTS capstone.user_login (
+CREATE TABLE IF NOT EXISTS template.user_login (
 userid VARCHAR(50),
 email VARCHAR(50),
 password VARCHAR(50),

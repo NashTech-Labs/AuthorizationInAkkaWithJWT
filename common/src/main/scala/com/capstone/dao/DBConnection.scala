@@ -39,4 +39,3 @@ final class UserAdminTable(tag: Tag)(implicit val schema: String)
     (email, name, password, role, key).shaped <> (AdminLoginRequest.tupled, AdminLoginRequest.unapply)
 
 }
-

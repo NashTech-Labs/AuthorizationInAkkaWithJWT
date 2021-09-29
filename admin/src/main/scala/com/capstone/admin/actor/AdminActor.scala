@@ -50,7 +50,9 @@ class AdminActor(adminDAO: AdminDAO)(
           .validateUser(loginRequest)
           .map(count => ValidationResponse(count > 0))
       res.pipeTo(sender())
-    case CheckAdminOrUserExists(emailId: String, password: String, userType: String) =>
+    case CheckAdminOrUserExists(emailId: String,
+                                password: String,
+                                userType: String) =>
       val res = adminDAO
         .isAdminEmailExists(emailId, password, userType)
         .map(count => {
@@ -138,14 +140,12 @@ object AdminActor {
 
   final case class IsValidPasswordRequest(loginRequest: UserLoginRequest)
       extends AdminActorMessage
-  final case class CheckIfUserAccountEnabled(emailId: String,
-                                               userType: String)
+  final case class CheckIfUserAccountEnabled(emailId: String, userType: String)
       extends AdminActorMessage
 
   final case class CreateAdminOrUser(admin: AdminLoginRequest)
       extends AdminActorMessage
-  final case class CreateUser(user: UserLoginDetails)
-      extends AdminActorMessage
+  final case class CreateUser(user: UserLoginDetails) extends AdminActorMessage
 
   final case class Validation(isValid: Boolean) extends APIDataResponse
   final case class ValidationResponse(value: Boolean) extends APIDataResponse
