@@ -82,7 +82,7 @@ More details about project libraraies (e.g. version etc..) can be found in files
 ### Routes
 
 ##### Login
-###### Request: POST <- localhost:9004/admin/login
+###### Request: POST <- localhost:9001/admin/login
 ###### Body: raw JSON
 ````
 role: user/admin
