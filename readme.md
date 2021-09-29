@@ -1,4 +1,4 @@
-## CapstoneAPI
+## Authorization in Akka with JWT
 
 This project is developed using MySQL database in Scala programming Language and is implemented using Akka HTTP. This project focuses on the JWT authentication and role based authorization. The user is restricted from the routes which are accessible by admin.
 
